@@ -1,0 +1,33 @@
+name: Registry refresh
+
+on:
+  schedule:
+    - cron: '23 4 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  badges:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Render badges for every entry
+        run: |
+          node -e "const r=require('./data/certified.json');for(const e of r.entries){require('child_process').execSync('node scripts/badge.mjs '+e.repo,{stdio:'inherit'})}"
+
+      - name: Commit changes (if any)
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          if [ -n "$(git status --porcelain)" ]; then
+            git add badges data/certified.json
+            git commit -m 'chore: refresh certification badges'
+            git push
+          fi
