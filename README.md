@@ -19,6 +19,7 @@ Community certification for DeepSeek Harness plugins: a public spec, a machine-c
 - **C** — E passes, the rest incomplete
 - **D** — any hard gate fails (`dsh.bundle` missing, no license, malicious pattern hit)
 - **Security veto** — obfuscated code, credential exfiltration, or surprising install-time behavior grades D immediately, with the reason published
+- **Environment-blocked E** — when E ends `install-fail` purely because of an unattended-environment gate (e.g. pnpm's interactive `approve-builds` cannot be confirmed in a sandbox), the entry keeps grade **B** (if A–D pass) and records `environment-blocked` with the reproduction command. Environmental gates are never recorded as `D`.
 
 ## Evidence discipline (load-bearing)
 
