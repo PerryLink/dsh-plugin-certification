@@ -47,6 +47,16 @@ Every score must come from real, reproducible execution — a probe result, a Sc
 - Grades: A / B / C / D, plus a gray `no-data` for anything not in the registry.
 - Lists and marketplaces link the badge only — their "no endorsement" stance is unchanged.
 
+## Checks
+
+`node scripts/check-freshness.mjs` is the gate for this repository (`node:` builtins only, zero dependencies) and runs on every push, on every pull request, and weekly:
+
+- **freshness** — the registry `generatedAt` and every entry `snapshot` must be at most 30 days old. Stale certification evidence fails the build rather than quietly describing a plugin as it was a month ago.
+- **mirror** — the read-only copy served by `dsh-cert-mcp` must stay byte-identical to `data/certified.json`, so the live MCP URL can never serve grades this repository no longer stands behind. When the sibling repository is absent the check reports `SKIP` — an explicit "nothing compared", never a pass.
+- **markers** — the two roadmap counts above are asserted against their sources, so the prose cannot drift away from the roster.
+
+`DSH_CERT_MIRROR` and `DSH_KIT_ROSTER` override the sibling paths. `.github/workflows/checks.yml` (read-only, `contents: read`) checks `dsh-cert-mcp` and `dsh-plugin-kit` out into `_siblings/` and passes them through those switches, so all three assertions run on every push and pull request plus weekly — and the same switches are how the staleness, drift, malformed-JSON and absent-source cases are exercised locally. The scheduled `registry.yml` (which needs `contents: write` to commit badges) runs only the freshness assertion, since that job checks out nothing else.
+
 ## Relationship to existing tools
 
 - `dsh-test-drive` supplies dimension E records (already-open `test_drive` domain)
@@ -59,7 +69,7 @@ Every score must come from real, reproducible execution — a probe result, a Sc
 
 1. Publish spec v1 (this document)
 2. Registry + badge CI
-3. Certify the 33 PerryLink plugins as the first baseline batch
+3. Certify the PerryLink plugin family as the first baseline batch: **33** plugin repos in the family roster and **1** certified so far. Both counts are derived, not hand-typed — `scripts/check-freshness.mjs` asserts them against `dsh-plugin-kit/data/repos.json` (the roster, `updatedAt` 2026-08-26, which does not yet list repos added after that date) and against this registry. <!-- roster-count: 33 --><!-- certified-count: 1 -->
 4. Pilot with other top plugin authors
 5. Propose badge display to the canonical list and marketplaces (link-only, no endorsement)
 
