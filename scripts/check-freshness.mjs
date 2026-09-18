@@ -7,10 +7,14 @@
 //      must be no older than MAX_AGE_DAYS. A certification grade claims to
 //      describe a plugin as it is now; stale evidence is a correctness bug, not
 //      a cosmetic one, so this is a hard fail.
-//   2. mirror    - the read-only MCP mirror served by `dsh-cert-mcp` must be
-//      byte-identical to this registry. A drifted mirror publishes stale grades
-//      under a live URL. A missing mirror (a lone clone) is reported as SKIP,
-//      never as a pass that pretends to have compared something.
+//   2. mirror    - the read-only MCP mirror served by `dsh-cert-mcp` must carry
+//      the same registry content as this repository. A drifted mirror publishes
+//      stale grades under a live URL. The comparison normalises CRLF to LF first:
+//      the two repositories are separate clones with their own `core.autocrlf`,
+//      so a raw-byte comparison would report drift that does not exist and the
+//      gate would be ignored for being wrong. A missing mirror (a lone clone) is
+//      reported as SKIP, never as a pass that pretends to have compared
+//      something.
 //   3. markers   - the machine-readable denominators in README.md
 //      (`<!-- roster-count: N -->`, `<!-- certified-count: M -->`) must equal
 //      the values derived from `dsh-plugin-kit/data/repos.json` and from this
@@ -106,14 +110,16 @@ if (registry.message) {
   } else if (mirror.message) {
     fail(mirror.message)
   } else {
-    const sha = (file) => crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex')
-    const mine = sha(REGISTRY)
-    const theirs = sha(MIRROR)
+    // Compare content, not checkout accidents: CRLF and LF are the same registry.
+    const digest = (file) => crypto.createHash('sha256').update(fs.readFileSync(file).toString('utf8').replace(/\r\n/g, '\n'), 'utf8').digest('hex')
+    const mine = digest(REGISTRY)
+    const theirs = digest(MIRROR)
     if (mine !== theirs) {
-      fail(`mirror: drifted - ${MIRROR} is not byte-identical to data/certified.json (local ${mine.slice(0, 16)}…, mirror ${theirs.slice(0, 16)}…)`)
+      fail(`mirror: drifted - ${MIRROR} does not carry the same registry content as data/certified.json (local ${mine.slice(0, 16)}…, mirror ${theirs.slice(0, 16)}…; sha256 over LF-normalised text)`)
       notes.push('mirror: remedy - re-run the registry refresh in dsh-cert-mcp so its served copy matches this repository')
     } else {
-      notes.push(`mirror: ok (sha256 ${mine.slice(0, 16)}… identical)`)
+      const rawEqual = fs.readFileSync(REGISTRY).equals(fs.readFileSync(MIRROR))
+      notes.push(`mirror: ok (sha256 ${mine.slice(0, 16)}… identical${rawEqual ? '' : '; line endings normalised for comparison'})`)
     }
   }
 }
