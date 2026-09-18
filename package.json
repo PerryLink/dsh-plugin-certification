@@ -1,0 +1,11 @@
+{
+  "name": "@perrylink/dsh-plugin-certification",
+  "private": true,
+  "description": "Community certification registry for DeepSeek Harness plugins: public spec, machine-checkable scoring model, registry data and badges. Data repository - ships no Cordis plugin and is not installable.",
+  "dsh": {
+    "manifestVersion": 1
+  },
+  "engines": {
+    "dsh": ">=0.1.2-rc.1 <0.2.0 || >=0.1.5-alpha.1 <0.2.0 || >=0.1.6-0 <0.2.0"
+  }
+}

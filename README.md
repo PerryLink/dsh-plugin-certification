@@ -2,6 +2,8 @@
 
 Community certification for DeepSeek Harness plugins: a public spec, a machine-checkable scoring model, and an independent registry with badges. This project exists because the ecosystem's canonical list explicitly says it is "not a judge of plugin quality" and "listing is not a security review" — someone outside the listings should run that check, reproducibly, without claiming authority over them.
 
+**This is a data repository, not a plugin.** It ships no Cordis plugin, nothing here is installable, and nothing is published to npm: `package.json` is `private` and exists only so ecosystem tooling can read the metadata (`dsh.manifestVersion`, `engines.dsh` — the same three-clause range that `dsh-plugin-kit/data/peer-range.json` records as canonical, quoted verbatim rather than re-typed).
+
 ## The five dimensions
 
 | Dimension | Evidence source | Checks |
