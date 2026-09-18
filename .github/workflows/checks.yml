@@ -1,0 +1,51 @@
+name: Checks
+
+# The gate for this data repository. It is deliberately its own workflow:
+# registry.yml runs on a schedule and holds contents:write to commit badges, so a
+# pull request must not be able to reach it. This workflow is read-only and runs
+# where a gate is actually useful - on every push and pull request - plus weekly,
+# so stale evidence is caught even in a quiet repository.
+#
+# The mirror and marker assertions compare against sibling repositories
+# (dsh-cert-mcp, dsh-plugin-kit). They are checked out read-only into
+# _siblings/ and passed to the gate through its documented path overrides; a
+# default run in the fleet resolves them next to this checkout instead.
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '17 4 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check-freshness:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Check out the registry mirror (read-only)
+        uses: actions/checkout@v4
+        with:
+          repository: PerryLink/dsh-cert-mcp
+          path: _siblings/dsh-cert-mcp
+
+      # The kit's default branch is master, not main.
+      - name: Check out the family roster (read-only)
+        uses: actions/checkout@v4
+        with:
+          repository: PerryLink/dsh-plugin-kit
+          ref: master
+          path: _siblings/dsh-plugin-kit
+
+      - name: Freshness, mirror and marker gate
+        env:
+          DSH_CERT_MIRROR: _siblings/dsh-cert-mcp/data/certified.json
+          DSH_KIT_ROSTER: _siblings/dsh-plugin-kit/data/repos.json
+        run: node scripts/check-freshness.mjs

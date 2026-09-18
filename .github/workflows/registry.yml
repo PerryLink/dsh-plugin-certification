@@ -18,6 +18,12 @@ jobs:
         with:
           node-version: '22'
 
+      # Fail the refresh before it renders anything if the evidence went stale.
+      # (Sibling repositories are not checked out here, so the mirror and marker
+      # assertions report SKIP in this job; freshness.yml runs them for real.)
+      - name: Freshness gate
+        run: node scripts/check-freshness.mjs
+
       - name: Render badges for every entry
         run: |
           node -e "const r=require('./data/certified.json');for(const e of r.entries){require('child_process').execSync('node scripts/badge.mjs '+e.repo,{stdio:'inherit'})}"
