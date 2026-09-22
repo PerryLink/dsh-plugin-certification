@@ -1,4 +1,5 @@
 # dsh-plugin-certification
+[![dshfind](https://dshfind.com/api/badge/PerryLink/dsh-plugin-certification?metric=downloads)](https://dshfind.com/plugins/PerryLink/dsh-plugin-certification?ref=badge)
 
 Community certification for DeepSeek Harness plugins: a public spec, a machine-checkable scoring model, and an independent registry with badges. This project exists because the ecosystem's canonical list explicitly says it is "not a judge of plugin quality" and "listing is not a security review" — someone outside the listings should run that check, reproducibly, without claiming authority over them.
 
