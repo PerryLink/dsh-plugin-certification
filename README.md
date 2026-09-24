@@ -74,7 +74,7 @@ Every score must come from real, reproducible execution — a probe result, a Sc
 4. Pilot with other top plugin authors
 5. Propose badge display to the canonical list and marketplaces (link-only, no endorsement)
 
-**DSH family line:** this repository belongs to the **PerryLink DeepSeek Harness plugin family**, whose current line is `dsh-v0.1.7-alpha.1`.
+**DSH family line:** this repository belongs to the **PerryLink DeepSeek Harness plugin family**, whose current line is `dsh-v0.1.7-rc.1`.
 
 ## PerryLink DSH Plugin Family
 
