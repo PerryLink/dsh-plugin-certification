@@ -157,6 +157,34 @@ if (!registry.message) {
           notes.push(`markers: ${name} ${want} ok`)
         }
       }
+
+      // The markers are invisible in the rendered page; the sentence above them
+      // repeats the same numbers in bold. Assert those too - a hand-typed "33"
+      // outlived a roster change for two months because only the marker was
+      // machine-checked, and the roster now also carries a per-repo `status`
+      // that the sentence quotes.
+      const stated = readme.match(/Certify the PerryLink plugin family as the first baseline batch:([^\n]*?)<!--\s*roster-count/)
+      if (stated === null) {
+        fail('markers: README.md no longer states the baseline-batch counts in prose; update this gate')
+      } else {
+        const missingStatus = repos.filter((repo) => typeof repo?.status !== 'string').map((repo) => repo?.name)
+        if (missingStatus.length > 0) {
+          fail(`markers: ${path.basename(ROSTER)} entries without a status field: ${missingStatus.join(', ')}`)
+        } else {
+          const byStatus = { active: 0, frozen: 0, retired: 0 }
+          for (const repo of repos) {
+            if (repo?.role === 'infra') continue
+            byStatus[repo.status] += 1
+          }
+          const bold = [...stated[1].matchAll(/\*\*(\d+)\*\*/g)].map((match) => Number(match[1]))
+          const want = [pluginRepos, byStatus.active, byStatus.frozen, byStatus.retired, certified]
+          if (bold.join(',') !== want.join(',')) {
+            fail(`markers: the baseline-batch sentence states ${bold.join('/')} but the roster derives ${want.join('/')} (plugin repos / active / frozen / retired / certified)`)
+          } else {
+            notes.push(`markers: baseline-batch prose ${bold.join('/')} ok`)
+          }
+        }
+      }
     }
   }
 }
