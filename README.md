@@ -70,7 +70,7 @@ Every score must come from real, reproducible execution — a probe result, a Sc
 
 1. Publish spec v1 (this document)
 2. Registry + badge CI
-3. Certify the PerryLink plugin family as the first baseline batch: **41** plugin repos in the family roster — **32** actively maintained, **6** frozen and **3** retired, which is every entry whose `role` is not `infra` — and **1** certified so far. Both counts are derived, not hand-typed — `scripts/check-freshness.mjs` asserts them, and the bold numbers in this sentence, against `dsh-plugin-kit/data/repos.json` (the roster, `updatedAt` 2026-10-07) and against this registry. <!-- roster-count: 41 --><!-- certified-count: 1 -->
+3. Certify the PerryLink plugin family as the first baseline batch: **94** plugin repos in the family roster — **86** actively maintained, **5** frozen and **3** retired, which is every entry whose `role` is not `infra` — and **1** certified so far. Both counts are derived, not hand-typed — `scripts/check-freshness.mjs` asserts them, and the bold numbers in this sentence, against `dsh-plugin-kit/data/repos.json` (the roster, `updatedAt` 2026-10-12) and against this registry. <!-- roster-count: 94 --><!-- certified-count: 1 -->
 4. Pilot with other top plugin authors
 5. Propose badge display to the canonical list and marketplaces (link-only, no endorsement)
 
@@ -78,7 +78,7 @@ Every score must come from real, reproducible execution — a probe result, a Sc
 
 ## PerryLink DSH Plugin Family
 
-This project is one of the **33 actively maintained** DeepSeek Harness plugins from [PerryLink](https://github.com/PerryLink) — the roster is **42**, of which **6** are frozen and **3** retired; every one keeps its row below, with the reason in the Status column. If this one helps you, the others likely will too:
+This project is one of the **34 actively maintained** DeepSeek Harness plugins from [PerryLink](https://github.com/PerryLink) — the roster is **42**, of which **5** are frozen and **3** retired; every one keeps its row below, with the reason in the Status column. If this one helps you, the others likely will too:
 
 | Plugin | One-liner | Status |
 |---|---|---|
@@ -106,7 +106,7 @@ This project is one of the **33 actively maintained** DeepSeek Harness plugins f
 | **[dsh-lsp-actions](https://github.com/PerryLink/dsh-lsp-actions)** | LSP diagnostics, formatting, completion, code actions and rename over language servers | |
 | **[dsh-mask](https://github.com/PerryLink/dsh-mask)** | PII masking middleware: anonymize at the model boundary, restore at the display layer | |
 | **[dsh-mcp-panel](https://github.com/PerryLink/dsh-mcp-panel)** | Read-only MCP runtime panel: /mcp command + Settings tab with status, tools and errors | |
-| **[dsh-memento](https://github.com/PerryLink/dsh-memento)** | Approval-gated cross-session memory: ctx.memory seam + SQLite + memory tool | 🧊 FROZEN — see the repo README |
+| **[dsh-memento](https://github.com/PerryLink/dsh-memento)** | Approval-gated cross-session memory: ctx.memory seam + SQLite + memory tool | |
 | **[dsh-observe](https://github.com/PerryLink/dsh-observe)** | OpenTelemetry and Langfuse observability exporter for DeepSeek Harness. | |
 | **[dsh-output-styles](https://github.com/PerryLink/dsh-output-styles)** | Claude Code outputStyles-equivalent runtime style switching | |
 | **[dsh-permission-rules](https://github.com/PerryLink/dsh-permission-rules)** | Claude Code-style declarative allow/deny/ask permission rules with audit | |
