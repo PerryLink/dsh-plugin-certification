@@ -36,12 +36,11 @@ jobs:
           repository: PerryLink/dsh-cert-mcp
           path: _siblings/dsh-cert-mcp
 
-      # The kit's default branch is master, not main.
+      # The kit's default branch is main (it was master before the 2026-10 move).
       - name: Check out the family roster (read-only)
         uses: actions/checkout@v4
         with:
           repository: PerryLink/dsh-plugin-kit
-          ref: master
           path: _siblings/dsh-plugin-kit
 
       - name: Freshness, mirror and marker gate
