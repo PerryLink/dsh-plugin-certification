@@ -17,8 +17,7 @@
   },
   "sourceOfTruth": {
     "certificationGrades": "data/certified.json",
-    "certificationSpec": "README.md",
-    "standardsLevels": "https://github.com/PerryLink/dsh-standards"
+    "certificationSpec": "README.md"
   },
   "axes": {
     "grade": {
