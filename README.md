@@ -70,6 +70,8 @@ Every score must come from real, reproducible execution — a probe result, a Sc
 
 1. Publish spec v1 (this document)
 2. Registry + badge CI
+> **2026-10-31 update:** ten more plugins were frozen (three support/tools plus seven S1 demos). The 94 / 86 / 5 / 3 numbers below are this certification batch's pre-batch baseline; current family status lives in `dsh-kit` and `dsh-plugin-kit`.
+
 3. Certify the PerryLink plugin family as the first baseline batch: **94** plugin repos in the family roster — **86** actively maintained, **5** frozen and **3** retired, which is every entry whose `role` is not `infra` — and **1** certified so far. Both counts are derived, not hand-typed — `scripts/check-freshness.mjs` asserts them, and the bold numbers in this sentence, against `dsh-plugin-kit/data/repos.json` (the roster, `updatedAt` 2026-10-12) and against this registry. <!-- roster-count: 94 --><!-- certified-count: 1 -->
    - ⚠️ **Scope of this 94, so it is not read as the family's size** — the authoritative table is in [`dsh-kit`'s README, "Family counts — one definition per number"](https://github.com/PerryLink/dsh-kit#family-counts--one-definition-per-number). This number is the machine-readable roster file: 95 entries there = these 94 plus the `dsh-plugin-kit` infra entry. It is **not** the 45-row family tables (which keep retired rows and never delete one), **not** the 92 install specs in `dsh-kit/plugins.txt` (which exclude the 3 retired roster members), and **not** the 96-row catalog (which adds the third-party `dsh-phocinae`). The family's two documented blurb scopes and no others are 34 active / 42 roster (per-plugin READMEs) and 87 active / 95 roster (`dsh-kit`).
 4. Pilot with other top plugin authors
@@ -89,12 +91,12 @@ This project is one of the **87 actively maintained** DeepSeek Harness plugins f
 | **[dsh-aqua-input-check](https://github.com/PerryLink/dsh-aqua-input-check)** | 水产养殖投入品记录核对（按投入品用量、休药期与起捕间隔核对记录自洽，仅提示差异，不作出定性结论） |  |
 | **[dsh-archive-check](https://github.com/PerryLink/dsh-archive-check)** | 档案归档完整性与保管期限核对（依据《档案法》及配套规定，仅提示差异，不作出定性结论） |  |
 | **[dsh-auto-review](https://github.com/PerryLink/dsh-auto-review)** | Second-model auto-review on the approval chain, fail-closed by default |  |
-| **[dsh-autotier](https://github.com/PerryLink/dsh-autotier)** | Automatic strong/cheap model-tier routing with deterministic risk guards and a `/tier` command |  |
+| **[dsh-autotier](https://github.com/PerryLink/dsh-autotier)** | Automatic strong/cheap model-tier routing with deterministic risk guards and a `/tier` command | 🧊 FROZEN — see the repo README |
 | **[dsh-background-agents](https://github.com/PerryLink/dsh-background-agents)** | Durable background child agents with a Web UI sidebar, messaging and interrupt | 🚫 RETIRED — see the repo README |
 | **[dsh-bid-ca-precheck](https://github.com/PerryLink/dsh-bid-ca-precheck)** | 投标文件符合性预检（按招标文件逐条核对响应情况，仅提示差异，不作出定性结论） |  |
 | **[dsh-bid-qual-check](https://github.com/PerryLink/dsh-bid-qual-check)** | 投标人资格条件核对（按资格条件与证明材料核对逐条响应，仅提示差异，不作出定性结论） |  |
 | **[dsh-budget](https://github.com/PerryLink/dsh-budget)** | Cost governance for DeepSeek Harness: budgets, carbon, and latency in one panel. | 🧊 FROZEN — see the repo README |
-| **[dsh-cert-mcp](https://github.com/PerryLink/dsh-cert-mcp)** | Read-only MCP server exposing the certification registry: grades, snapshots and five-dimension evidence |  |
+| **[dsh-cert-mcp](https://github.com/PerryLink/dsh-cert-mcp)** | Read-only MCP server exposing the certification registry: grades, snapshots and five-dimension evidence | 🧊 FROZEN — see the repo README |
 | **[dsh-checkpoint-rewind](https://github.com/PerryLink/dsh-checkpoint-rewind)** | Claude Code /rewind-equivalent: snapshots, session forks, one-shot restore |  |
 | **[dsh-claude-move](https://github.com/PerryLink/dsh-claude-move)** | Migrate Claude Code sessions, memory, skills and CLAUDE.md into DSH | 🧊 FROZEN — see the repo README |
 | **[dsh-click](https://github.com/PerryLink/dsh-click)** | Cross-platform native desktop control for DeepSeek Harness — Windows first. |  |
