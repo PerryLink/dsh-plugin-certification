@@ -66,6 +66,16 @@ Every score must come from real, reproducible execution — a probe result, a Sc
 - OpenSSF Scorecard supplies dimension C wholesale — this project does not reinvent it
 - Overlap with `dsh-plugin-scorecard`, `dsh-plugin-audit`, and friends: governance discussion is open in [issue #1](../../issues/1); the goal is one agreed standard, not a twenty-first scorer
 
+## Relationship to the DSH levels
+
+The DSH adoption levels are defined outside this repository, by the private `dsh-standards` project (a draft at the time of writing; ask the maintainer for access). A public teaching copy is maintained in [dsh-plugin-guide/guide/standards.md](https://github.com/PerryLink/dsh-plugin-guide/blob/main/guide/standards.md): **DSH-ENTRY** (compatibility baseline), **DSH-FLOW** (recommended adoption) and **DSH-BOOST** (guiding practice). They are not this repository's grades, and nothing here certifies them.
+
+- **Grade vs level.** `A`/`B`/`C`/`D` is a quality and evidence grade over the five checks above; `ENTRY`/`FLOW`/`BOOST` is adoption depth. The two axes are orthogonal — a plugin can be grade `A` and still have `FLOW = not-run`.
+- **ENTRY.** Dimensions A (manifest) and E (install smoke) — plus a clear security veto, which is this repository's own precondition, not an ENTRY requirement — are necessary but **not sufficient** for ENTRY `runtime`. The standards' G0–G5 gates still decide that, and this registry records no gate result.
+- **FLOW and BOOST.** No dimension here runs the J1–J8 journeys or measures the LEV-1..LEV-8 practices; both are recorded as `not-covered` in [`data/standards-crosswalk.json`](./data/standards-crosswalk.json).
+
+The full crosswalk — what each dimension proves, which gate it can feed, and what this repository will not claim — is in [`STANDARDS.md`](./STANDARDS.md).
+
 ## Roadmap
 
 1. Publish spec v1 (this document)

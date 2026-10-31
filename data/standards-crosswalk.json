@@ -1,0 +1,400 @@
+{
+  "schema": "dsh-certification-standards-crosswalk/1",
+  "version": "1.0.0",
+  "updatedAt": "2026-11-01",
+  "nonOfficial": true,
+  "disclaimer": "Not an official DeepSeek standard, not a certification of any DSH level, not a security audit, and not a legal GB / GB-T / GB-Z instrument. The GB analogy in the standards repository is a communication aid only.",
+  "canonical": {
+    "machine": "spec/levels.json",
+    "levelsSchema": "dsh-levels/1",
+    "version": "1.0.0-rc.1",
+    "status": "draft",
+    "crosswalkPointer": "spec/levels.json#/crosswalk/dsh-plugin-certification",
+    "note": "The canonical repository is a private draft at the time of writing, so the public link may not resolve yet. Re-read the pointer before changing this file.",
+    "project": "PerryLink/dsh-standards",
+    "private": true,
+    "publicTeachingCopy": "https://github.com/PerryLink/dsh-plugin-guide/blob/main/guide/standards.md"
+  },
+  "sourceOfTruth": {
+    "certificationGrades": "data/certified.json",
+    "certificationSpec": "README.md",
+    "standardsLevels": "https://github.com/PerryLink/dsh-standards"
+  },
+  "axes": {
+    "grade": {
+      "values": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "badgeOnlyValue": "no-data",
+      "kind": "quality and evidence grade",
+      "isLevel": false,
+      "orthogonalToLevels": true
+    },
+    "level": {
+      "values": [
+        "entry",
+        "flow",
+        "boost"
+      ],
+      "labels": [
+        "DSH-ENTRY",
+        "DSH-FLOW",
+        "DSH-BOOST"
+      ],
+      "kind": "adoption depth",
+      "isGrade": false,
+      "assignedBy": "the standards repository, not this one"
+    }
+  },
+  "strengthVocabulary": {
+    "necessary-not-sufficient": "supplies a precondition a claim needs, and cannot produce the level state",
+    "supporting-not-sufficient": "supplies an input to a gate without any verdict",
+    "context-only": "governance context; feeds no level and no gate",
+    "certification-precondition-not-an-entry-gate": "a condition of this repository's own policy, not a requirement of the level"
+  },
+  "readingRules": [
+    "A dimension's levels array means relevance, not coverage; coverage is defined by levels[*].coveredBy.",
+    "feedsGates never means a gate passes; every gate verdict recorded here is not-run.",
+    "Nothing in this file is evidence: evidence lives in data/certified.json with a snapshot date."
+  ],
+  "dimensions": {
+    "manifest": {
+      "label": "A. Manifest compliance",
+      "kind": "static dimension",
+      "certifiedKey": "manifest",
+      "evidenceSource": "static inspection",
+      "levels": [
+        "entry"
+      ],
+      "strength": "necessary-not-sufficient",
+      "necessaryParts": [
+        "dsh.bundle declaration",
+        "engines declaration"
+      ],
+      "certificationPolicyParts": [
+        "SPDX license",
+        "keyword/topic alignment",
+        "five-language READMEs"
+      ],
+      "proves": [
+        "at the snapshot date the package declares a dsh bundle manifest, an SPDX license, aligned keywords/topics, five-language READMEs and an engines range"
+      ],
+      "feedsGates": [
+        {
+          "id": "G0",
+          "mode": "declaration-only",
+          "note": "a dsh.bundle manifest is declared; the patch document itself is not parsed"
+        },
+        {
+          "id": "G2",
+          "mode": "input-only",
+          "note": "the declared engines range is an input; evaluatePluginCompatibility is not run here"
+        }
+      ],
+      "doesNotProve": [
+        "G0: dsh.bundle.patch parses",
+        "G1: base + sample compose and inserted row names resolve",
+        "G2: the host admits the plugin",
+        "G3: real boot reaches ACTIVE/disabled rows",
+        "G4: exports['./client'] and a package-root row",
+        "G5: runtime version/commit/artifact-mtime anchoring",
+        "security",
+        "FLOW J1-J8",
+        "BOOST LEV-1..LEV-8"
+      ]
+    },
+    "buildHygiene": {
+      "label": "B. Build hygiene",
+      "kind": "static dimension",
+      "certifiedKey": "buildHygiene",
+      "evidenceSource": "static inspection",
+      "levels": [
+        "entry"
+      ],
+      "strength": "supporting-not-sufficient",
+      "proves": [
+        "the published package surface is deliberate (files allowlist, peer/optional dependency declarations), no known malicious install-time pattern is present, and lint/typecheck gates exist"
+      ],
+      "feedsGates": [
+        {
+          "id": "G1",
+          "mode": "input-only",
+          "note": "a complete files allowlist is an input to row/file resolution; composition is not run"
+        },
+        {
+          "id": "G2",
+          "mode": "input-only",
+          "note": "declared peer/optional ranges are inputs; the host verdict is not run"
+        }
+      ],
+      "doesNotProve": [
+        "that the allowlist covers every file a patch references (G1)",
+        "that the declared ranges admit the recorded host (G2)",
+        "that install scripts are harmless (pattern match, not execution)",
+        "runtime behaviour",
+        "security",
+        "FLOW J1-J8",
+        "BOOST LEV-1..LEV-8"
+      ]
+    },
+    "supplyChain": {
+      "label": "C. Supply chain",
+      "kind": "third-party signal",
+      "certifiedKey": "supplyChain",
+      "evidenceSource": "OpenSSF Scorecard API and badges",
+      "levels": [],
+      "strength": "context-only",
+      "proves": [
+        "the upstream repository's posture on the 18 OpenSSF Scorecard checks, as measured by the Scorecard service on its run date"
+      ],
+      "feedsGates": [],
+      "doesNotProve": [
+        "any gate outcome",
+        "plugin behaviour at load or run",
+        "a security verdict",
+        "FLOW J1-J8",
+        "BOOST LEV-1..LEV-8"
+      ]
+    },
+    "releaseIntegrity": {
+      "label": "D. Release integrity",
+      "kind": "artifact-provenance signal",
+      "certifiedKey": "releaseIntegrity",
+      "evidenceSource": "npm provenance / SLSA attestation",
+      "levels": [],
+      "strength": "context-only",
+      "proves": [
+        "the published artifact carries verifiable SLSA provenance from a CI identity (npm audit signatures) at the snapshot date"
+      ],
+      "feedsGates": [],
+      "doesNotProve": [
+        "that the artifact behaves correctly",
+        "that the source is safe",
+        "that a host admits it (G2)",
+        "any gate outcome",
+        "FLOW J1-J8",
+        "BOOST LEV-1..LEV-8"
+      ]
+    },
+    "installSmoke": {
+      "label": "E. Install smoke",
+      "kind": "runtime observation",
+      "certifiedKey": "installSmoke",
+      "evidenceSource": "dsh-test-drive records",
+      "resultStates": [
+        "ok",
+        "load-fail",
+        "install-fail",
+        "skip"
+      ],
+      "levels": [
+        "entry"
+      ],
+      "strength": "necessary-not-sufficient",
+      "proves": [
+        "the recorded version installs into an isolated throwaway profile and boots keyless on the recorded host version, reaching MISSING_CREDENTIAL (tree-load proof), with a reproduction command"
+      ],
+      "feedsGates": [
+        {
+          "id": "G2",
+          "mode": "install-observed",
+          "note": "the recorded host accepted the recorded version at the recorded time; no gate evaluation or exemption is recorded"
+        },
+        {
+          "id": "G3",
+          "mode": "boot-only",
+          "note": "the tree loads; no per-row ACTIVE/disabled assertion is made"
+        }
+      ],
+      "doesNotProve": [
+        "that every target row is ACTIVE or disabled (G3)",
+        "that another host version admits it (G2)",
+        "composition or row resolution (G1)",
+        "client exports and root row (G4)",
+        "removal cleanliness (FLOW)",
+        "that any feature works at runtime",
+        "that ok means runtime"
+      ]
+    },
+    "securityVeto": {
+      "label": "Security veto",
+      "kind": "veto (not a scored dimension)",
+      "certifiedKey": "veto",
+      "levels": [
+        "entry"
+      ],
+      "strength": "certification-precondition-not-an-entry-gate",
+      "proves": [
+        "no obfuscated code, credential exfiltration or surprising install-time behaviour was found in the reviewed artifact at the snapshot date"
+      ],
+      "feedsGates": [],
+      "doesNotProve": [
+        "security",
+        "an ENTRY gate (ENTRY explicitly does not audit security)",
+        "a CVE, sandbox or red-team result",
+        "that a clear veto means safe",
+        "FLOW J1-J8",
+        "BOOST LEV-1..LEV-8"
+      ]
+    }
+  },
+  "levels": {
+    "entry": {
+      "label": "DSH-ENTRY",
+      "analogy": "GB (communication aid only; no legal force)",
+      "claim": "compatibility baseline",
+      "coveredBy": [
+        "manifest",
+        "installSmoke"
+      ],
+      "vetoGate": "securityVeto",
+      "sufficiency": "necessary-not-sufficient",
+      "status": "inputs-only",
+      "gaps": [
+        "runtime G0-G5"
+      ],
+      "gates": [
+        {
+          "id": "G0",
+          "requires": "dsh.bundle.patch parses",
+          "thisRepo": "declaration-only",
+          "verdict": "not-run"
+        },
+        {
+          "id": "G1",
+          "requires": "base + sample compose; inserted row names resolve",
+          "thisRepo": "none",
+          "verdict": "not-run"
+        },
+        {
+          "id": "G2",
+          "requires": "evaluatePluginCompatibility admits, or an explicit exact-version exemption applies",
+          "thisRepo": "input-and-install-observed",
+          "verdict": "not-run"
+        },
+        {
+          "id": "G3",
+          "requires": "real boot(): every target row is ACTIVE or disabled",
+          "thisRepo": "boot-only",
+          "verdict": "not-run"
+        },
+        {
+          "id": "G4",
+          "requires": "when dsh.client exists: exports['./client'] and a package-root row",
+          "thisRepo": "none",
+          "verdict": "not-run"
+        },
+        {
+          "id": "G5",
+          "requires": "report carries runtime version/commit/artifact mtime; stale evidence is marked stale",
+          "thisRepo": "none",
+          "verdict": "not-run",
+          "note": "the registry's own 30-day snapshot gate is a different clock: registry date vs today, not artifact mtime vs report"
+        }
+      ],
+      "evidenceStates": [
+        "recognized",
+        "static",
+        "runtime",
+        "blocked",
+        "failed",
+        "not-run",
+        "stale"
+      ],
+      "recordsAnyState": false,
+      "stateWhenReadingOnlyThisRepo": "not-run",
+      "note": "A grade A-D is neither necessary nor sufficient for an ENTRY state. Security is not an ENTRY requirement, so the veto is a precondition of this repository's own claims only."
+    },
+    "flow": {
+      "label": "DSH-FLOW",
+      "analogy": "GB/T (communication aid only)",
+      "claim": "recommended adoption",
+      "coveredBy": [],
+      "status": "not-covered",
+      "gaps": [
+        "J1-J8"
+      ],
+      "gates": [],
+      "nearestAdjacent": [
+        "installSmoke installs into a throwaway profile and prints the profile row: the install half of the install/remove journey, with no removal assertion and no journey state",
+        "manifest checks that five-language READMEs exist, not quickstart/permissions/error content"
+      ],
+      "whatWouldBeNeeded": [
+        "a journey record per J1-J8: command, environment, expected/actual, log path, timestamp, state",
+        "a harness that runs add/dump/remove, enable/disable, bad configuration, quickstart, permissions, upgrade/rollback/uninstall, diagnostics and headless/web client states in a throwaway DSH_HOME",
+        "a coverage rule where a skip is not a pass and a manual journey is labelled manual",
+        "a freshness rule for journey evidence",
+        "a submission format and gate change in this repository before any dsh-flow:* label appears"
+      ],
+      "evidenceStates": [
+        "manual",
+        "runtime",
+        "not-run",
+        "failed",
+        "stale"
+      ],
+      "note": "The standards repository's own journey harness runs J1 only; J2-J8 are not-run there as well. Adjacency is not coverage."
+    },
+    "boost": {
+      "label": "DSH-BOOST",
+      "analogy": "GB/Z (communication aid only)",
+      "claim": "guiding practice; evidence cards, no badge",
+      "coveredBy": [],
+      "status": "not-covered",
+      "gaps": [
+        "LEV-1..LEV-8"
+      ],
+      "gates": [],
+      "nearestAdjacent": [
+        "buildHygiene checks that lint/typecheck gates exist; that is not LEV-8 evidence",
+        "releaseIntegrity checks provenance; that is not LEV-6 prefix stability",
+        "installSmoke records a boot; that is not LEV-1 effect-baseline evidence"
+      ],
+      "evidenceCards": "the standards repository: 33-DSH-BOOST加速实践.md section 4 defines the card; spec/levels.json lists LEV-1..LEV-8",
+      "whatWouldBeNeeded": [
+        "one evidence card per practice: environment, input scale, command, negative control, result, version anchor, limitations",
+        "storage that lets the card be re-run, not prose",
+        "a rule that described is not measured and that a single run is not a production benchmark",
+        "a decision on whether this registry stores cards at all; today it has no place for them"
+      ],
+      "evidenceStates": [
+        "measured",
+        "not-measured",
+        "failed",
+        "stale"
+      ],
+      "note": "A practice card names a practice and a version; it is not a grade and not a badge, and it must never be attached to an entry as a level."
+    }
+  },
+  "willNotClaim": [
+    "that an A-D grade is a DSH level, or that ENTRY, FLOW or BOOST is a grade",
+    "an ENTRY runtime state from certification evidence alone",
+    "that installSmoke ok equals ENTRY runtime, or that a keyless boot equals a row-ACTIVE assertion",
+    "coverage of FLOW J1-J8 or of BOOST LEV-1..LEV-8",
+    "a security verdict from the security veto, the OpenSSF Scorecard or npm provenance",
+    "official status, DeepSeek endorsement, or compliance with GB, GB/T or GB/Z (the analogy has no legal force)",
+    "a combined score, ranking or ordering derived from a grade plus a level",
+    "that a stale snapshot describes the plugin as it is now"
+  ],
+  "maintenance": {
+    "generated": false,
+    "readByGate": false,
+    "note": "Curated like the registry. scripts/check-freshness.mjs does not read this file, so it changes no grade and no gate; nothing catches drift, so review it by hand.",
+    "syncWith": "spec/levels.json#/crosswalk/dsh-plugin-certification",
+    "syncRule": "Change both sides in the same review. Never add coverage before the harness exists; never remove a not-covered because a grade is high.",
+    "reviewedAgainst": "dsh-levels/1 1.0.0-rc.1 (draft), 2026-11-01",
+    "futureLevelFields": [
+      "level",
+      "levelVersion",
+      "dshVersion",
+      "cordisVersion",
+      "commit",
+      "generatedAt",
+      "scope",
+      "notClaimed"
+    ]
+  }
+}
