@@ -1,0 +1,14 @@
+[
+  {
+    "path": "docs/assets/dsh-plugin-certification-hero.png",
+    "kind": "hero",
+    "alt": "dsh-plugin-certification documentation card",
+    "caption": "Generated documentation baseline; replace with a real run."
+  },
+  {
+    "path": "docs/assets/dsh-plugin-certification-demo.gif",
+    "kind": "demo",
+    "alt": "dsh-plugin-certification documentation preview",
+    "caption": "Generated documentation preview."
+  }
+]

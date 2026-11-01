@@ -14,5 +14,6 @@
     "file": "data/standards-crosswalk.json",
     "canonical": "https://github.com/PerryLink/dsh-standards"
   },
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "icon": "icon.svg"
 }
