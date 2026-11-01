@@ -16,7 +16,7 @@
 //      reported as SKIP, never as a pass that pretends to have compared
 //      something.
 //   3. markers   - the machine-readable denominators in README.md
-//      (`<!-- roster-count: N -->`, `<!-- certified-count: M -->`) must equal
+//      (`<!-- roster-count: N -->`, `<!-- attested-count: M -->`) must equal
 //      the values derived from `dsh-plugin-kit/data/repos.json` and from this
 //      registry. Prose numbers drift; markers fail loudly instead.
 //
@@ -34,9 +34,9 @@ import { fileURLToPath } from 'node:url'
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)))
 const MAX_AGE_DAYS = 30
-const REGISTRY = path.join(root, 'data', 'certified.json')
+const REGISTRY = path.join(root, 'data', 'attestations.json')
 const README = path.join(root, 'README.md')
-const MIRROR = path.resolve(process.env.DSH_CERT_MIRROR ?? path.join(root, '..', 'dsh-cert-mcp', 'data', 'certified.json'))
+const MIRROR = path.resolve(process.env.DSH_CERT_MIRROR ?? path.join(root, '..', 'dsh-cert-mcp', 'data', 'attestations.json'))
 const ROSTER = path.resolve(process.env.DSH_KIT_ROSTER ?? path.join(root, '..', 'dsh-plugin-kit', 'data', 'repos.json'))
 
 const DAY_MS = 86_400_000
@@ -115,7 +115,7 @@ if (registry.message) {
     const mine = digest(REGISTRY)
     const theirs = digest(MIRROR)
     if (mine !== theirs) {
-      fail(`mirror: drifted - ${MIRROR} does not carry the same registry content as data/certified.json (local ${mine.slice(0, 16)}…, mirror ${theirs.slice(0, 16)}…; sha256 over LF-normalised text)`)
+      fail(`mirror: drifted - ${MIRROR} does not carry the same registry content as data/attestations.json (local ${mine.slice(0, 16)}…, mirror ${theirs.slice(0, 16)}…; sha256 over LF-normalised text)`)
       notes.push('mirror: remedy - re-run the registry refresh in dsh-cert-mcp so its served copy matches this repository')
     } else {
       const rawEqual = fs.readFileSync(REGISTRY).equals(fs.readFileSync(MIRROR))
@@ -142,10 +142,10 @@ if (!registry.message) {
     if (readme !== null) {
       const repos = Array.isArray(roster.json.repos) ? roster.json.repos : []
       const pluginRepos = repos.filter((repo) => repo?.role !== 'infra').length
-      const certified = Array.isArray(registry.json.entries) ? registry.json.entries.length : 0
+      const attested = Array.isArray(registry.json.entries) ? registry.json.entries.length : 0
       const expected = [
         ['roster-count', pluginRepos, `entries in ${path.basename(ROSTER)} with role != infra`],
-        ['certified-count', certified, 'entries in data/certified.json'],
+        ['attested-count', attested, 'entries in data/attestations.json'],
       ]
       for (const [name, want, source] of expected) {
         const match = readme.match(new RegExp(`<!--\\s*${name}:\\s*(\\d+)\\s*-->`))
@@ -163,7 +163,7 @@ if (!registry.message) {
       // outlived a roster change for two months because only the marker was
       // machine-checked, and the roster now also carries a per-repo `status`
       // that the sentence quotes.
-      const stated = readme.match(/Certify the PerryLink plugin family as the first baseline batch:([^\n]*?)<!--\s*roster-count/)
+      const stated = readme.match(/Attest the PerryLink plugin family as the first baseline batch:([^\n]*?)<!--\s*roster-count/)
       if (stated === null) {
         fail('markers: README.md no longer states the baseline-batch counts in prose; update this gate')
       } else {
@@ -177,9 +177,9 @@ if (!registry.message) {
             byStatus[repo.status] += 1
           }
           const bold = [...stated[1].matchAll(/\*\*(\d+)\*\*/g)].map((match) => Number(match[1]))
-          const want = [pluginRepos, byStatus.active, byStatus.frozen, byStatus.retired, certified]
+          const want = [pluginRepos, byStatus.active, byStatus.frozen, byStatus.retired, attested]
           if (bold.join(',') !== want.join(',')) {
-            fail(`markers: the baseline-batch sentence states ${bold.join('/')} but the roster derives ${want.join('/')} (plugin repos / active / frozen / retired / certified)`)
+            fail(`markers: the baseline-batch sentence states ${bold.join('/')} but the roster derives ${want.join('/')} (plugin repos / active / frozen / retired / attested)`)
           } else {
             notes.push(`markers: baseline-batch prose ${bold.join('/')} ok`)
           }

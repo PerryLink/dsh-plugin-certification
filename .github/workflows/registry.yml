@@ -26,14 +26,14 @@ jobs:
 
       - name: Render badges for every entry
         run: |
-          node -e "const r=require('./data/certified.json');for(const e of r.entries){require('child_process').execSync('node scripts/badge.mjs '+e.repo,{stdio:'inherit'})}"
+          node -e "const r=require('./data/attestations.json');for(const e of r.entries){require('child_process').execSync('node scripts/badge.mjs '+e.repo,{stdio:'inherit'})}"
 
       - name: Commit changes (if any)
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
           if [ -n "$(git status --porcelain)" ]; then
-            git add badges data/certified.json
+            git add badges data/attestations.json
             git commit -m 'chore: refresh certification badges'
             git push
           fi

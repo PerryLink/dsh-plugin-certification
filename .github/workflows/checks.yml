@@ -45,6 +45,6 @@ jobs:
 
       - name: Freshness, mirror and marker gate
         env:
-          DSH_CERT_MIRROR: _siblings/dsh-cert-mcp/data/certified.json
+          DSH_CERT_MIRROR: _siblings/dsh-cert-mcp/data/attestations.json
           DSH_KIT_ROSTER: _siblings/dsh-plugin-kit/data/repos.json
         run: node scripts/check-freshness.mjs

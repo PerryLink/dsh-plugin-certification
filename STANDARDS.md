@@ -10,7 +10,7 @@
 
 **`A` / `B` / `C` / `D` is a quality and evidence grade. `ENTRY` / `FLOW` / `BOOST` is adoption depth. They are orthogonal, and neither implies the other.**
 
-This repository grades five dimensions (A manifest, B build hygiene, C supply chain, D release integrity, E install smoke) plus a security veto. It does not assign a DSH level, and the registry has no field where one could be stored: `data/certified.json` records `grade`, the five `dimensions`, `veto` and a snapshot date. The standards repository states the same orthogonality in `34-三层分级模型-GB-GBT-GBZ类比.md` §5 and in `spec/levels.json` (`axes.rules`).
+This repository grades five dimensions (A manifest, B build hygiene, C supply chain, D release integrity, E install smoke) plus a security veto. It does not assign a DSH level, and the registry has no field where one could be stored: `data/attestations.json` records `grade`, the five `dimensions`, `veto` and a snapshot date. The standards repository states the same orthogonality in `34-三层分级模型-GB-GBT-GBZ类比.md` §5 and in `spec/levels.json` (`axes.rules`).
 
 Three consequences worth spelling out:
 
@@ -115,7 +115,7 @@ No mapping is defined and none should be invented: E `ok` is not `runtime`; E `s
 - A combined score, ranking or ordering derived from a grade plus a level.
 - That a stale snapshot describes a plugin as it is now. The 30-day gate exists because it does not.
 
-This document adds no certified entry and changes no grade. `data/certified.json`, `badges/` and the freshness gate are untouched.
+This document adds no attested entry and changes no grade. `data/attestations.json`, `badges/` and the freshness gate are untouched.
 
 ## 8. Maintaining this crosswalk
 
@@ -133,4 +133,4 @@ This document adds no certified entry and changes no grade. `data/certified.json
 - FLOW: `32-DSH-FLOW顺畅规范.md`
 - BOOST: `33-DSH-BOOST加速实践.md`
 - Orthogonality with grades: `34-三层分级模型-GB-GBT-GBZ类比.md` §5
-- This repository's spec: [`README.md`](./README.md) (five dimensions, grades, evidence discipline); registry: [`data/certified.json`](./data/certified.json)
+- This repository's spec: [`README.md`](./README.md) (five dimensions, grades, evidence discipline); registry: [`data/attestations.json`](./data/attestations.json)

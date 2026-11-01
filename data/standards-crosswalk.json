@@ -16,7 +16,7 @@
     "publicTeachingCopy": "https://github.com/PerryLink/dsh-plugin-guide/blob/main/guide/standards.md"
   },
   "sourceOfTruth": {
-    "certificationGrades": "data/certified.json",
+    "certificationGrades": "data/attestations.json",
     "certificationSpec": "README.md"
   },
   "axes": {
@@ -57,7 +57,7 @@
   "readingRules": [
     "A dimension's levels array means relevance, not coverage; coverage is defined by levels[*].coveredBy.",
     "feedsGates never means a gate passes; every gate verdict recorded here is not-run.",
-    "Nothing in this file is evidence: evidence lives in data/certified.json with a snapshot date."
+    "Nothing in this file is evidence: evidence lives in data/attestations.json with a snapshot date."
   ],
   "dimensions": {
     "manifest": {

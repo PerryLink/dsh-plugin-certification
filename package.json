@@ -1,7 +1,7 @@
 {
   "name": "@perrylink/dsh-plugin-certification",
   "private": true,
-  "description": "Community certification registry for DeepSeek Harness plugins: public spec, machine-checkable scoring model, registry data and badges. Data repository - ships no Cordis plugin and is not installable.",
+  "description": "Community attestation registry for DeepSeek Harness plugins: public spec, machine-checkable scoring model, registry data and badges. Data repository - ships no Cordis plugin and is not installable.",
   "dsh": {
     "manifestVersion": 1
   },
@@ -13,5 +13,6 @@
     "version": "1.0.0",
     "file": "data/standards-crosswalk.json",
     "canonical": "https://github.com/PerryLink/dsh-standards"
-  }
+  },
+  "license": "Apache-2.0"
 }
