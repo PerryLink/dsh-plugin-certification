@@ -1,3 +1,5 @@
+> **Moved:** this project is now **[dsh-certification](https://github.com/PerryLink/dsh-certification)**. This repository stays as a pointer/backup; new work happens in the new home. The old scoped name `@perrylink/dsh-plugin-certification` is deprecated.
+
 # dsh-plugin-certification
 [![dshfind](https://dshfind.com/api/badge/PerryLink/dsh-plugin-certification?metric=downloads)](https://dshfind.com/plugins/PerryLink/dsh-plugin-certification?ref=badge)
 
